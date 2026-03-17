@@ -3,16 +3,23 @@ const db = require("../db/queries");
 const { genPassword, validPassword } = require("../lib/passwordUtils");
 const { body, validationResult, matchedData } = require("express-validator");
 
+const alphaErr = "must only contain letters.";
 const lengthErr = "must be 50 characters or less.";
 const passwordErr = "Passwords don't match.";
+const passwordLengthErr = "must be less than 128 characters.";
+const emailErr = "Please enter valid email address ex: john@mail.com";
 
 const validateUser = [
   body("firstName")
+    .isAlpha()
+    .withMessage(`${alphaErr}`)
     .isLength({ max: 50 })
     .withMessage(`First Name ${lengthErr}`),
   body("lastName").isLength({ max: 50 }).withMessage(`Last Name ${lengthErr}`),
-  body("username"),
-  body("password"),
+  body("username").isEmail().withMessage(`${emailErr}`).normalizeEmail(),
+  body("password")
+    .isLength({ max: 128 })
+    .withMessage(`Password ${passwordLengthErr}`),
   body("confirmPassword")
     .custom((value, { req }) => {
       return value === req.body.password;
