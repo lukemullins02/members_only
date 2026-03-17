@@ -1,0 +1,14 @@
+<body>
+  <%- include("partials/errors.ejs") %>
+  <form method="POST" action="/create-message">
+    <div>
+      <label for="title">Title </label>
+      <input type="text" name="title" id="title" required />
+    </div>
+    <div>
+      <label for="text">Text </label>
+      <input type="text" name="text" id="text" required />
+    </div>
+    <input type="submit" value="Submit" />
+  </form>
+</body>

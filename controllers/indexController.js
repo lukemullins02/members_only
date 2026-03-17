@@ -68,12 +68,34 @@ const postJoinClub = async (req, res) => {
 
 const renderLogIn = (req, res) => res.render("login-form");
 
-const renderMessages = (req, res) => {
+const renderMessages = async (req, res) => {
   if (!req.user) {
     res.redirect("/login");
   } else {
-    res.render("messages");
+    const messages = await db.getMessages();
+    res.render("messages", {
+      messages: messages,
+    });
   }
+};
+
+const renderCreateMessage = (req, res) => {
+  if (!req.user) {
+    res.render("/login");
+  } else {
+    res.render("message-form");
+  }
+};
+
+const postCreateMessage = async (req, res) => {
+  const { title, text } = req.body;
+  const added = Intl.DateTimeFormat("en-US", {
+    timeStyle: "short",
+    dateStyle: "short",
+  }).format(new Date());
+
+  await db.insertMessage(title, text, added, req.user.id);
+  res.redirect("/");
 };
 
 module.exports = {
@@ -83,4 +105,6 @@ module.exports = {
   postJoinClub,
   renderLogIn,
   renderMessages,
+  renderCreateMessage,
+  postCreateMessage,
 };

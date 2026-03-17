@@ -8,6 +8,8 @@ const {
   postJoinClub,
   renderLogIn,
   renderMessages,
+  renderCreateMessage,
+  postCreateMessage,
 } = require("../controllers/indexController");
 
 const indexRouter = Router();
@@ -35,5 +37,9 @@ indexRouter.post(
 indexRouter.get("/login-failure", (req, res, next) => {
   res.send("You entered the wrong password.");
 });
+
+indexRouter.get("/create-message", renderCreateMessage);
+
+indexRouter.post("/create-message", postCreateMessage);
 
 module.exports = indexRouter;

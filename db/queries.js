@@ -11,7 +11,22 @@ async function updateUser(id) {
   await pool.query("UPDATE users SET status = true where id = $1", [id]);
 }
 
+async function insertMessage(title, text, added, user_id) {
+  await pool.query(
+    "INSERT INTO messages (title, text,added, user_id) VALUES ($1,$2,$3,$4)",
+    [title, text, added, user_id],
+  );
+}
+
+async function getMessages() {
+  const { rows } = await pool.query("SELECT * FROM messages");
+
+  return rows;
+}
+
 module.exports = {
   insertUser,
   updateUser,
+  insertMessage,
+  getMessages,
 };
