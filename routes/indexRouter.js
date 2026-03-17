@@ -30,7 +30,7 @@ indexRouter.post(
   "/login",
   passport.authenticate("local", {
     failureRedirect: "/login-failure",
-    successRedirect: "/join-club",
+    successRedirect: "/",
   }),
 );
 

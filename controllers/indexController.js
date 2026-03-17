@@ -26,8 +26,6 @@ const validateUser = [
     .withMessage(`${passwordErr}`),
 ];
 
-const renderSignUp = (req, res) => res.render("sign-up-form");
-
 const createUser = [
   validateUser,
   async (req, res) => {
@@ -48,6 +46,8 @@ const createUser = [
     res.redirect("/");
   },
 ];
+
+const renderSignUp = (req, res) => res.render("sign-up-form");
 
 const renderJoinClub = (req, res) => {
   if (!req.user) {
@@ -72,10 +72,17 @@ const renderMessages = async (req, res) => {
   if (!req.user) {
     res.redirect("/login");
   } else {
-    const messages = await db.getMessages();
-    res.render("messages", {
-      messages: messages,
-    });
+    if (req.user.status === true) {
+      const messages = await db.getMessagesUsers();
+      res.render("messages", {
+        messages: messages,
+      });
+    } else {
+      const messages = await db.getMessages();
+      res.render("messages", {
+        messages: messages,
+      });
+    }
   }
 };
 

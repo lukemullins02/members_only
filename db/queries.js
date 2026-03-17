@@ -18,6 +18,14 @@ async function insertMessage(title, text, added, user_id) {
   );
 }
 
+async function getMessagesUsers() {
+  const { rows } = await pool.query(
+    "SELECT * FROM messages as m join users as u on m.user_id = u.id",
+  );
+
+  return rows;
+}
+
 async function getMessages() {
   const { rows } = await pool.query("SELECT * FROM messages");
 
@@ -29,4 +37,5 @@ module.exports = {
   updateUser,
   insertMessage,
   getMessages,
+  getMessagesUsers,
 };
