@@ -49,13 +49,30 @@ const createUser = [
   },
 ];
 
-const renderJoinClub = (req, res) => res.render("join-club");
+const renderJoinClub = (req, res) => {
+  if (!req.user) {
+    res.redirect("/login");
+  } else {
+    res.render("join-club");
+  }
+};
 
 const postJoinClub = async (req, res) => {
   if (req.body.member === process.env.MEMBER_PWD) {
-    console.log("Correct");
+    await db.updateUser(req.user.id);
+    res.redirect("/");
   } else {
     console.log("Wrong");
+  }
+};
+
+const renderLogIn = (req, res) => res.render("login-form");
+
+const renderMessages = (req, res) => {
+  if (!req.user) {
+    res.redirect("/login");
+  } else {
+    res.render("messages");
   }
 };
 
@@ -64,4 +81,6 @@ module.exports = {
   createUser,
   renderJoinClub,
   postJoinClub,
+  renderLogIn,
+  renderMessages,
 };

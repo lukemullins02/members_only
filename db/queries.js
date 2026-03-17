@@ -7,6 +7,11 @@ async function insertUser(firstName, lastName, username, hash, salt) {
   );
 }
 
+async function updateUser(id) {
+  await pool.query("UPDATE users SET status = true where id = $1", [id]);
+}
+
 module.exports = {
   insertUser,
+  updateUser,
 };
