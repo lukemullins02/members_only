@@ -1,0 +1,28 @@
+{
+  "name": "members_only",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukemullins02/members_only.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lukemullins02/members_only/issues"
+  },
+  "homepage": "https://github.com/lukemullins02/members_only#readme",
+  "description": "",
+  "dependencies": {
+    "connect-pg-simple": "^10.0.0",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.1",
+    "passport": "^0.7.0",
+    "pg": "^8.20.0"
+  }
+}
