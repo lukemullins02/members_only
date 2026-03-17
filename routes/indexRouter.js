@@ -1,6 +1,11 @@
 const { Router } = require("express");
 
-const { renderSignUp, createUser } = require("../controllers/indexController");
+const {
+  renderSignUp,
+  createUser,
+  renderJoinClub,
+  postJoinClub,
+} = require("../controllers/indexController");
 
 const indexRouter = Router();
 
@@ -11,5 +16,9 @@ indexRouter.get("/", (req, res, next) => {
 indexRouter.get("/sign-up", renderSignUp);
 
 indexRouter.post("/sign-up", createUser);
+
+indexRouter.get("/join-club", renderJoinClub);
+
+indexRouter.post("/join-club", postJoinClub);
 
 module.exports = indexRouter;

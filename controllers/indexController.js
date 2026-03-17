@@ -1,4 +1,3 @@
-const renderSignUp = (req, res) => res.render("sign-up-form");
 const db = require("../db/queries");
 const { genPassword, validPassword } = require("../lib/passwordUtils");
 const { body, validationResult, matchedData } = require("express-validator");
@@ -27,6 +26,8 @@ const validateUser = [
     .withMessage(`${passwordErr}`),
 ];
 
+const renderSignUp = (req, res) => res.render("sign-up-form");
+
 const createUser = [
   validateUser,
   async (req, res) => {
@@ -48,7 +49,19 @@ const createUser = [
   },
 ];
 
+const renderJoinClub = (req, res) => res.render("join-club");
+
+const postJoinClub = async (req, res) => {
+  if (req.body.member === process.env.MEMBER_PWD) {
+    console.log("Correct");
+  } else {
+    console.log("Wrong");
+  }
+};
+
 module.exports = {
   renderSignUp,
   createUser,
+  renderJoinClub,
+  postJoinClub,
 };
