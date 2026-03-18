@@ -58,7 +58,7 @@ const createUser = [
 
     const userExist = await db.getUser(username);
 
-    if (!userExist) {
+    if (userExist) {
       errors.push({ msg: "Email already registered" });
       return res.status(400).render("sign-up-form", {
         errors: errors,
