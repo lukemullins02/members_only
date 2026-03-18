@@ -14,6 +14,7 @@ const {
   renderAdmin,
   postAdmin,
   deleteMessage,
+  renderError,
 } = require("../controllers/indexController");
 
 const indexRouter = Router();
