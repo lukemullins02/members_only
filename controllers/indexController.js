@@ -177,6 +177,12 @@ const deleteMessage = async (req, res) => {
   res.redirect("/");
 };
 
+const renderError = (req, res) => {
+  res.send(
+    "Invalid URL. Try https://mem-only.up.railway.app/ to get back to home or login.",
+  );
+};
+
 module.exports = {
   renderSignUp,
   createUser,
@@ -189,4 +195,5 @@ module.exports = {
   renderAdmin,
   postAdmin,
   deleteMessage,
+  renderError,
 };

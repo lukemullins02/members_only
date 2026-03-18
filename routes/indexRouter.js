@@ -63,4 +63,6 @@ indexRouter.post("/admin", postAdmin);
 
 indexRouter.get("/:id/delete", deleteMessage);
 
+indexRouter.get("/{*splat}", renderError);
+
 module.exports = indexRouter;
