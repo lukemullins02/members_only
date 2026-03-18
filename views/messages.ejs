@@ -6,6 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   </head>
   <body class="roboto-text">
+    <%- include("partials/navbar.ejs") %>
     <div class="card-container">
     <% for (let i = 0; i < messages.length; i++) { %>
        <div class="card">
@@ -18,7 +19,7 @@
         <p>Anonymous</p>
         <p class="user"><%= messages[i].title %></p>
         <p><%= messages[i].text %></p>
-        <p><i>Login to see date and User's name</i></p>
+        <p><i>Join club to see date and User's name</i></p>
         <% }%>
     </div>
     <% } %>

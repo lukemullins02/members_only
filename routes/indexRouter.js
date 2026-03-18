@@ -42,4 +42,13 @@ indexRouter.get("/create-message", renderCreateMessage);
 
 indexRouter.post("/create-message", postCreateMessage);
 
+indexRouter.get("/logout", (req, res, next) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/login");
+  });
+});
+
 module.exports = indexRouter;

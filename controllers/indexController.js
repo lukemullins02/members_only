@@ -47,7 +47,13 @@ const createUser = [
   },
 ];
 
-const renderSignUp = (req, res) => res.render("sign-up-form");
+const renderSignUp = (req, res) => {
+  if (!req.user) {
+    res.render("sign-up-form");
+  } else {
+    res.redirect("/");
+  }
+};
 
 const renderJoinClub = (req, res) => {
   if (!req.user) {
@@ -66,7 +72,13 @@ const postJoinClub = async (req, res) => {
   }
 };
 
-const renderLogIn = (req, res) => res.render("login-form");
+const renderLogIn = (req, res) => {
+  if (!req.user) {
+    res.render("login-form");
+  } else {
+    res.redirect("/");
+  }
+};
 
 const renderMessages = async (req, res) => {
   if (!req.user) {
@@ -88,7 +100,7 @@ const renderMessages = async (req, res) => {
 
 const renderCreateMessage = (req, res) => {
   if (!req.user) {
-    res.render("/login");
+    res.redirect("/login");
   } else {
     res.render("message-form");
   }
