@@ -24,14 +24,14 @@ async function insertMessage(text, added, user_id) {
 
 async function getMessagesUsers() {
   const { rows } = await pool.query(
-    "SELECT m.id, m.user_id, m.text, m.added, u.firstname, u.lastname FROM messages as m join users as u on m.user_id = u.id",
+    "SELECT m.id, m.user_id, m.text, m.added, u.firstname, u.lastname FROM messages as m join users as u on m.user_id = u.id order by m.id desc",
   );
 
   return rows;
 }
 
 async function getMessages() {
-  const { rows } = await pool.query("SELECT * FROM messages");
+  const { rows } = await pool.query("SELECT * FROM messages order by id desc");
 
   return rows;
 }
