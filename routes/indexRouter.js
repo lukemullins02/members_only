@@ -31,13 +31,15 @@ indexRouter.get("/login", renderLogIn);
 indexRouter.post(
   "/login",
   passport.authenticate("local", {
-    failureRedirect: "/login-failure",
+    failureRedirect: "/login",
+    failureMessage: true,
     successRedirect: "/",
   }),
 );
 
-indexRouter.get("/login-failure", (req, res, next) => {
-  res.send("You entered the wrong password.");
+indexRouter.get("/login-failure", (req, res) => {
+  console.log(req.body);
+  res.send("Username or password were incorrect.");
 });
 
 indexRouter.get("/create-message", renderCreateMessage);

@@ -1,5 +1,7 @@
 <body>
-  <%- include("partials/errors.ejs") %>
+ <% if (messages) { %>
+  <div class="alert alert-danger"><%= messages %></div>
+<% } %>
   <form method="POST" action="/login">
     <div>
       <label for="username">Email </label>

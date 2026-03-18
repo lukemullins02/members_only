@@ -91,8 +91,10 @@ const postJoinClub = [
 ];
 
 const renderLogIn = (req, res) => {
+  const errorMessages = req.session.messages;
+  req.session.messages = [];
   if (!req.user) {
-    res.render("login-form");
+    res.render("login-form", { messages: errorMessages });
   } else {
     res.redirect("/");
   }
