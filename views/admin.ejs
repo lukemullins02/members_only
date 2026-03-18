@@ -8,9 +8,10 @@
   />
 </head>
 <body class="roboto-text">
-  <%- include("partials/navbar.ejs") %> <%- include("partials/errors.ejs") %>
+  <%- include("partials/navbar.ejs") %>
   <main class="single">
     <form class="single-form" method="POST" action="/admin">
+      <%- include("partials/errors.ejs") %>
       <div>
         <label class="single-center" for="admin">Admin Password </label>
         <input type="text" name="admin" id="admin" />

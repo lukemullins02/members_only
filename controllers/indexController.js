@@ -6,9 +6,10 @@ const alphaErr = "must only contain letters.";
 const lengthErr = "must be 50 characters or less.";
 const passwordErr = "Passwords don't match.";
 const passwordLengthErr = "must be less than 128 characters.";
-const emailErr = "Please enter valid email address ex: john@mail.com";
+const emailErr = "Please enter valid email address ex: john@mail.com.";
 const memberErr = "Please enter correct club password.";
 const adminErr = "Please enter correct admin password.";
+const msgErr = "must be 200 characters or less.";
 
 const validateUser = [
   body("firstName")
@@ -36,6 +37,10 @@ const validateMember = [
 
 const validateAdmin = [
   body("admin").equals(`${process.env.ADMIN_PWD}`).withMessage(`${adminErr}`),
+];
+
+const validateMessage = [
+  body("text").isLength({ max: 200 }).withMessage(`${msgErr}`),
 ];
 
 const createUser = [
@@ -137,16 +142,26 @@ const renderCreateMessage = (req, res) => {
   }
 };
 
-const postCreateMessage = async (req, res) => {
-  const { text } = req.body;
-  const added = Intl.DateTimeFormat("en-US", {
-    timeStyle: "short",
-    dateStyle: "short",
-  }).format(new Date());
+const postCreateMessage = [
+  validateMessage,
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("join-club", {
+        errors: errors.array(),
+      });
+    }
 
-  await db.insertMessage(text, added, req.user.id);
-  res.redirect("/");
-};
+    const { text } = matchedData(req.body);
+    const added = Intl.DateTimeFormat("en-US", {
+      timeStyle: "short",
+      dateStyle: "short",
+    }).format(new Date());
+
+    await db.insertMessage(text, added, req.user.id);
+    res.redirect("/");
+  },
+];
 
 const renderAdmin = (req, res) => {
   if (!req.user) {
