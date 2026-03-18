@@ -152,7 +152,7 @@ const postCreateMessage = [
       });
     }
 
-    const { text } = matchedData(req.body);
+    const { text } = matchedData(req);
     const added = Intl.DateTimeFormat("en-US", {
       timeStyle: "short",
       dateStyle: "short",
