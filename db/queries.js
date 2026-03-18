@@ -11,6 +11,10 @@ async function updateUser(id) {
   await pool.query("UPDATE users SET status = true where id = $1", [id]);
 }
 
+async function updateAdmin(id) {
+  await pool.query("UPDATE users SET admin = true where id = $1", [id]);
+}
+
 async function insertMessage(title, text, added, user_id) {
   await pool.query(
     "INSERT INTO messages (title, text,added, user_id) VALUES ($1,$2,$3,$4)",
@@ -38,4 +42,5 @@ module.exports = {
   insertMessage,
   getMessages,
   getMessagesUsers,
+  updateAdmin,
 };

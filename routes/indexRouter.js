@@ -10,6 +10,8 @@ const {
   renderMessages,
   renderCreateMessage,
   postCreateMessage,
+  renderAdmin,
+  postAdmin,
 } = require("../controllers/indexController");
 
 const indexRouter = Router();
@@ -50,5 +52,9 @@ indexRouter.get("/logout", (req, res, next) => {
     res.redirect("/login");
   });
 });
+
+indexRouter.get("/admin", renderAdmin);
+
+indexRouter.post("/admin", postAdmin);
 
 module.exports = indexRouter;

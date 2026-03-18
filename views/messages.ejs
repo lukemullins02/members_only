@@ -10,16 +10,22 @@
     <div class="card-container">
     <% for (let i = 0; i < messages.length; i++) { %>
        <div class="card">
-        <% if(messages[i].status === true) { %>
+        <% if(user.status === true) { %>
         <p><%= messages[i].firstname %> <%= messages[i].lastname %></p>
         <p class="user"><%= messages[i].title %></p>
         <p><%= messages[i].text %></p>
         <p><i><%= messages[i].added %> </i></p>
+         <% if(user.admin === true) { %>
+         <a href="/" >Delete</a>
+        <% }%>
         <% }else{%>
         <p>Anonymous</p>
         <p class="user"><%= messages[i].title %></p>
         <p><%= messages[i].text %></p>
         <p><i>Join club to see date and User's name</i></p>
+        <% if(user.admin === true) { %>
+         <a href="/" >Delete</a>
+        <% }%>
         <% }%>
     </div>
     <% } %>

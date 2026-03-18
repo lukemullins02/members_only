@@ -7,6 +7,8 @@ const lengthErr = "must be 50 characters or less.";
 const passwordErr = "Passwords don't match.";
 const passwordLengthErr = "must be less than 128 characters.";
 const emailErr = "Please enter valid email address ex: john@mail.com";
+const memberErr = "Please enter correct club password.";
+const adminErr = "Please enter correct admin password.";
 
 const validateUser = [
   body("firstName")
@@ -24,6 +26,16 @@ const validateUser = [
       return value === req.body.password;
     })
     .withMessage(`${passwordErr}`),
+];
+
+const validateMember = [
+  body("member")
+    .equals(`${process.env.MEMBER_PWD}`)
+    .withMessage(`${memberErr}`),
+];
+
+const validateAdmin = [
+  body("admin").equals(`${process.env.ADMIN_PWD}`).withMessage(`${adminErr}`),
 ];
 
 const createUser = [
@@ -63,14 +75,20 @@ const renderJoinClub = (req, res) => {
   }
 };
 
-const postJoinClub = async (req, res) => {
-  if (req.body.member === process.env.MEMBER_PWD) {
+const postJoinClub = [
+  validateMember,
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("join-club", {
+        errors: errors.array(),
+      });
+    }
+
     await db.updateUser(req.user.id);
     res.redirect("/");
-  } else {
-    console.log("Wrong");
-  }
-};
+  },
+];
 
 const renderLogIn = (req, res) => {
   if (!req.user) {
@@ -88,11 +106,13 @@ const renderMessages = async (req, res) => {
       const messages = await db.getMessagesUsers();
       res.render("messages", {
         messages: messages,
+        user: req.user,
       });
     } else {
       const messages = await db.getMessages();
       res.render("messages", {
         messages: messages,
+        user: req.user,
       });
     }
   }
@@ -117,6 +137,29 @@ const postCreateMessage = async (req, res) => {
   res.redirect("/");
 };
 
+const renderAdmin = (req, res) => {
+  if (!req.user) {
+    res.redirect("/login");
+  } else {
+    res.render("admin");
+  }
+};
+
+const postAdmin = [
+  validateAdmin,
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("admin", {
+        errors: errors.array(),
+      });
+    }
+
+    await db.updateAdmin(req.user.id);
+    res.redirect("/");
+  },
+];
+
 module.exports = {
   renderSignUp,
   createUser,
@@ -126,4 +169,6 @@ module.exports = {
   renderMessages,
   renderCreateMessage,
   postCreateMessage,
+  renderAdmin,
+  postAdmin,
 };
