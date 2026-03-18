@@ -53,14 +53,12 @@ const createUser = [
 
     const userExist = await db.getUser(username);
 
-    if (userExist) {
+    if (!userExist) {
       errors.push({ msg: "Email already registered" });
       return res.status(400).render("sign-up-form", {
         errors: errors,
       });
     }
-
-    console.log(userExist);
 
     const { salt, hash } = genPassword(password);
 
@@ -173,6 +171,12 @@ const postAdmin = [
   },
 ];
 
+const deleteMessage = async (req, res) => {
+  console.log(req.params.id);
+  await db.deleteMsg(req.params.id);
+  res.redirect("/");
+};
+
 module.exports = {
   renderSignUp,
   createUser,
@@ -184,4 +188,5 @@ module.exports = {
   postCreateMessage,
   renderAdmin,
   postAdmin,
+  deleteMessage,
 };

@@ -24,7 +24,7 @@ async function insertMessage(title, text, added, user_id) {
 
 async function getMessagesUsers() {
   const { rows } = await pool.query(
-    "SELECT * FROM messages as m join users as u on m.user_id = u.id",
+    "SELECT m.id, m.title, m.user_id, m.text, m.added, u.firstname, u.lastname FROM messages as m join users as u on m.user_id = u.id",
   );
 
   return rows;
@@ -44,6 +44,10 @@ async function getUser(username) {
   return rows;
 }
 
+async function deleteMsg(id) {
+  await pool.query("delete from messages where id = $1", [id]);
+}
+
 module.exports = {
   insertUser,
   updateUser,
@@ -52,4 +56,5 @@ module.exports = {
   getMessagesUsers,
   updateAdmin,
   getUser,
+  deleteMsg,
 };

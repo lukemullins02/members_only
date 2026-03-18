@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const passport = require("passport");
+const { isAuth } = require("../controllers/authController");
 
 const {
   renderSignUp,
@@ -12,6 +13,7 @@ const {
   postCreateMessage,
   renderAdmin,
   postAdmin,
+  deleteMessage,
 } = require("../controllers/indexController");
 
 const indexRouter = Router();
@@ -42,7 +44,7 @@ indexRouter.get("/login-failure", (req, res) => {
   res.send("Username or password were incorrect.");
 });
 
-indexRouter.get("/create-message", renderCreateMessage);
+indexRouter.get("/create-message", isAuth, renderCreateMessage);
 
 indexRouter.post("/create-message", postCreateMessage);
 
@@ -58,5 +60,7 @@ indexRouter.get("/logout", (req, res, next) => {
 indexRouter.get("/admin", renderAdmin);
 
 indexRouter.post("/admin", postAdmin);
+
+indexRouter.get("/:id/delete", deleteMessage);
 
 module.exports = indexRouter;
