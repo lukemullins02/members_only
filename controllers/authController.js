@@ -3,7 +3,7 @@ module.exports.isAuth = (req, res, next) => {
     if (req.user.status === true) {
       next();
     } else {
-      res.send("Join the club to create messages");
+      res.render("auth-page");
     }
   } else {
     res.redirect("/login");
