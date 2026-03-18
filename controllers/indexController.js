@@ -41,15 +41,26 @@ const validateAdmin = [
 const createUser = [
   validateUser,
   async (req, res) => {
-    const errors = validationResult(req);
+    const errors = validationResult(req).array();
 
-    if (!errors.isEmpty()) {
+    if (errors.length != 0) {
       return res.status(400).render("sign-up-form", {
-        errors: errors.array(),
+        errors: errors,
       });
     }
 
     const { firstName, lastName, username, password } = matchedData(req);
+
+    const userExist = await db.getUser(username);
+
+    if (userExist) {
+      errors.push({ msg: "Email already registered" });
+      return res.status(400).render("sign-up-form", {
+        errors: errors,
+      });
+    }
+
+    console.log(userExist);
 
     const { salt, hash } = genPassword(password);
 

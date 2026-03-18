@@ -36,6 +36,14 @@ async function getMessages() {
   return rows;
 }
 
+async function getUser(username) {
+  const { rows } = await pool.query("select * from users where username = $1", [
+    username,
+  ]);
+
+  return rows;
+}
+
 module.exports = {
   insertUser,
   updateUser,
@@ -43,4 +51,5 @@ module.exports = {
   getMessages,
   getMessagesUsers,
   updateAdmin,
+  getUser,
 };
