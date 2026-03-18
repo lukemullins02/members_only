@@ -15,16 +15,16 @@ async function updateAdmin(id) {
   await pool.query("UPDATE users SET admin = true where id = $1", [id]);
 }
 
-async function insertMessage(title, text, added, user_id) {
+async function insertMessage(text, added, user_id) {
   await pool.query(
-    "INSERT INTO messages (title, text,added, user_id) VALUES ($1,$2,$3,$4)",
-    [title, text, added, user_id],
+    "INSERT INTO messages (text,added, user_id) VALUES ($1,$2,$3)",
+    [text, added, user_id],
   );
 }
 
 async function getMessagesUsers() {
   const { rows } = await pool.query(
-    "SELECT m.id, m.title, m.user_id, m.text, m.added, u.firstname, u.lastname FROM messages as m join users as u on m.user_id = u.id",
+    "SELECT m.id, m.user_id, m.text, m.added, u.firstname, u.lastname FROM messages as m join users as u on m.user_id = u.id",
   );
 
   return rows;

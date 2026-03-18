@@ -138,13 +138,13 @@ const renderCreateMessage = (req, res) => {
 };
 
 const postCreateMessage = async (req, res) => {
-  const { title, text } = req.body;
+  const { text } = req.body;
   const added = Intl.DateTimeFormat("en-US", {
     timeStyle: "short",
     dateStyle: "short",
   }).format(new Date());
 
-  await db.insertMessage(title, text, added, req.user.id);
+  await db.insertMessage(text, added, req.user.id);
   res.redirect("/");
 };
 

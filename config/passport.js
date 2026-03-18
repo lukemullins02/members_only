@@ -13,7 +13,7 @@ const verifyCallback = async (username, password, done) => {
     const user = rows[0];
 
     if (!user) {
-      return done(null, false, { message: "Incorrect Username" });
+      return done(null, false, { message: "*Incorrect Username" });
     }
 
     const isValid = validPassword(password, user.hash, user.salt);
@@ -21,7 +21,7 @@ const verifyCallback = async (username, password, done) => {
     if (isValid) {
       return done(null, user);
     } else {
-      return done(null, false, { message: "Incorret Password" });
+      return done(null, false, { message: "*Incorret Password" });
     }
   } catch (err) {
     return done(err);

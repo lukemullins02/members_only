@@ -1,8 +1,20 @@
-<body>
- <% if (messages) { %>
-  <div class="alert alert-danger"><%= messages %></div>
+  <head>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+<body class="roboto-text">
+  <main class="login">
+  <h1>Members Only</h1>
+
+  <form class="single-form" method="POST" action="/login">
+     <% if (messages) { %>
+  <div class="login-error"><%= messages %></div>
 <% } %>
-  <form method="POST" action="/login">
     <div>
       <label for="username">Email </label>
       <input type="text" name="username" id="username" required />
@@ -11,6 +23,10 @@
       <label for="password">Password </label>
       <input type="password" name="password" id="password" required />
     </div>
+    <div>
+      <a href="/sign-up">Register</a>
+    </div>
     <input type="submit" value="Submit" />
   </form>
+</main>
 </body>
